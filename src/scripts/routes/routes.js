@@ -7,14 +7,13 @@ import DevProfilePage from '../pages/profile/dev-profile-page';
 import { checkAuthenticatedRoute, checkUnauthenticatedRouteOnly } from '../utils/auth';
 
 
-const routes = {
+export const routes = {
   '/login': () => checkUnauthenticatedRouteOnly(new LoginPage()),
   '/register': () => checkUnauthenticatedRouteOnly(new RegisterPage()),
 
   '/': () => checkAuthenticatedRoute(new HomePage()),
   '/new': () => checkAuthenticatedRoute(new NewPage()),
-  '/stories/:id': () => checkAuthenticatedRoute(new StoriesDetailPage()),
-  '/profile/developer': () => checkAuthenticatedRoute(new DevProfilePage()),
+  '/story/:id': () => checkAuthenticatedRoute(new StoriesDetailPage()),
+  '/developer': () => checkAuthenticatedRoute(new DevProfilePage()),
 };
 
-export default routes;

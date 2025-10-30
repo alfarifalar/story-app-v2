@@ -1,0 +1,56 @@
+// custom komponen _nav-link
+.nav-link:hover{
+  background: $gray-800;
+}
+
+.card {
+  border: 1px solid var(--bs-tertiary-color);
+  background: var(--bs-body-bg);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px $light;
+  }
+
+  .card-img {
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .card-body {
+    padding: 1rem 1.25rem;
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--bs-body-color);
+      margin-bottom: 0.25rem;
+    }
+
+    .card-date {
+      font-size: 0.875rem;
+      color: var(--bs-secondary-color);
+    }
+
+    .card-text {
+      margin-top: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--bs-body-color);
+    }
+  }
+}
+
+.spinner-border{
+  width: 60px;
+  height: 60px;
+  .text-cyan{
+    color: $cyan-700;
+  }
+}
+
+.btn-cyan{
+  background: $cyan-700;
+}
+

@@ -1,6 +1,6 @@
-// CSS imports
-import '../styles/styles.css';
-
+import '../styles/main.scss';
+import * as bootstrap from "bootstrap";
+import 'leaflet/dist/leaflet.css';
 import App from './pages/app';
 
 document.addEventListener('DOMContentLoaded', async () => {

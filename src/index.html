@@ -1,26 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html >
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="favicon.png">
 
-    <title>App</title>
+    <title>Story App</title>
   </head>
   <body>
-    <header>
-      <div class="main-header container">
-        <a class="brand-name" href="#/">App</a>
+    <header class="sticky-top">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container gap-2" >
+          <a class="navbar-brand p-0" href="#/">
+            <img src="images/logo.png" alt="Logo Story App" height="32">
+            <span class="d-none d-lg-inline">Story App</span>
+          </a>
 
-        <nav id="navigation-drawer" class="navigation-drawer">
-          <ul id="nav-list" class="nav-list">
-            <li><a href="#/">Beranda</a></li>
-            <li><a href="#/about">About</a></li>
-          </ul>
-        </nav>
+          <button 
+            class="navbar-toggler" 
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target="#navbarToggler" 
+            aria-controls="navbarToggler" 
+            aria-expanded="false" 
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-        <button id="drawer-button" class="drawer-button">☰</button>
-      </div>
+          <div class="collapse navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav nav-underline ms-auto mb-2 mb-lg-0" id="navlist"></ul>
+          </div>
+        </div>
+      </nav>
     </header>
 
     <main id="main-content" class="main-content"></main>

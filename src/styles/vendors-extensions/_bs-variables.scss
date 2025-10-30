@@ -1,0 +1,8 @@
+// custom variables font family pada _reboot 
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+$font-family-base: 'Quicksand', sans-serif;
+
+// custom variables padding-block pada _navbar
+$navbar-padding-y: 0.75rem;
+
+$navbar-toggler-font-size: $font-size-base;

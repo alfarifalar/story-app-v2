@@ -1,0 +1,42 @@
+// Functions Bootstrap
+@import '~bootstrap/scss/functions';
+
+// Variables Bootstrap
+@import '~bootstrap/scss/variables';
+
+// Custom Variabel
+@import '../vendors-extensions/bs-variables';
+
+// Konfigurasi Bootstrap
+@import '~bootstrap/scss/maps';
+@import '~bootstrap/scss/mixins';
+@import '~bootstrap/scss/root';
+@import '~bootstrap/scss/utilities';
+@import '~bootstrap/scss/reboot';
+ 
+// layout
+@import '~bootstrap/scss/type';
+@import '~bootstrap/scss/images';
+@import '~bootstrap/scss/containers';
+@import '~bootstrap/scss/grid';
+@import '~bootstrap/scss/helpers';
+
+
+// Komponen-Komponen
+@import '~bootstrap/scss/buttons';
+@import '~bootstrap/scss/close';
+@import '~bootstrap/scss/nav';
+@import '~bootstrap/scss/navbar';
+@import '~bootstrap/scss/card';
+@import '~bootstrap/scss/forms';
+@import '~bootstrap/scss/spinners';
+@import '~bootstrap/scss/dropdown';
+@import '~bootstrap/scss/transitions';
+
+
+// Utilities API untuk menghasilkan utility classes
+@import '~bootstrap/scss/utilities/api';
+@import '~bootstrap/scss/variables-dark';
+
+// Custom code
+@import '../vendors-extensions/bs-custom';
