@@ -71,13 +71,19 @@ export default class NewPage {
                 <!-- Location -->
                 <div class="mb-3">
                   <div class="new-form__location__container">
-                    <div class="new-form__location__map__container">
+                    <div class="new-form__location__map__container mb-3">
                       <div id="map" class="new-form__location__map"></div>
                       <div id="map-loading-container"></div>
                     </div>
-                    <div class="new-form__location__lat-lng">
-                      <input type="number" class="form-control" name="latitude" value="-6.175389" disabled>
-                      <input type="number" class="form-control" name="longitude" value="106.827139" disabled>
+                    <div class="d-block d-md-flex row g-3">
+                      <div class="col-12 col-md-6 mb-2">
+                        <label class="form-label" for="latitude">Latitude</label>
+                        <input type="number" class="form-control" name="latitude" value="-6.175389" disabled>
+                      </div>
+                      <div class="col-12 col-md-6 mb-2">
+                        <label class="form-label" for="longtitude">Longtitude</label>
+                        <input type="number" class="form-control" name="longitude" value="106.827139" disabled>
+                      </div>
                     </div>
                   </div>
                 </div>

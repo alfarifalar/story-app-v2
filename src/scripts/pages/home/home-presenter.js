@@ -7,10 +7,22 @@ export default class HomePresenter {
     this.#model = model;
   }
 
-  async initialStories() {
+  async showStoriesListMap() {
+    this.#view.showMapLoading();
+    try {
+      await this.#view.initialMap();
+    } catch (error) {
+      console.error('showStoriesListMap: error:', error);
+    } finally {
+      this.#view.hideMapLoading();
+    }
+  }
+
+  async initialStoriesAndMap() {
     this.#view.showLoading();
 
     try {
+      await this.showStoriesListMap();
       const response = await this.#model.getAll();
       console.log('initialStories: response:', response);
 

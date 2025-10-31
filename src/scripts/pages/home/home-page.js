@@ -5,21 +5,30 @@ import {
   errorTemplate,
 } from '../../templates';
 import Masonry from 'masonry-layout';
-import imagesLoaded from 'imagesloaded'; // direkomendasikan
+import imagesLoaded from 'imagesloaded';
+import Map from '../../utils/map';
 import HomePresenter from './home-presenter';
 import * as StoriesAPI from '../../data/api';
 
 export default class HomePage {
   #presenter = null;
+  #map = null;
 
   async render() {
     return `
       <section class="container justify-content-center align-items-center p-3 py-md-4">
-        <h1 class="mb-lg-2">Home</h1>
-        <div class="container px-0">
+        <h1 class="mb-lg-2">Stories</h1>
+        <section>
+          <div class="mb-2">
+            <div id="map" class="home-page__map"></div>
+            <div id="map-loading-container"></div>
+          </div>
+        </section>
+        <hr class="mt-4 mb-2">
+        <section class="container px-0">
           <div class="masonry-grid row g-1 g-lg-3 m-0" id="story-list"></div>
           <div id="story-list-loading"></div>
-        </div>
+        </section>
       </section>
     `;
   }
@@ -30,7 +39,7 @@ export default class HomePage {
       model: StoriesAPI,
     });
 
-    await this.#presenter.initialStories();
+    await this.#presenter.initialStoriesAndMap();
   }
 
   populateStoryList(message, stories) {
@@ -40,6 +49,12 @@ export default class HomePage {
     }
 
     const html = stories.reduce((accumulator, story) => {
+      if (this.#map && story.lat != null && story.lon != null) {
+        const coordinate = [story.lat, story.lon];
+        const markerOptions = { alt: story.name };
+        const popupOptions = { content: story.name };
+        this.#map.addMarker(coordinate, markerOptions, popupOptions);
+      }
       return accumulator.concat(
         storyItemTemplate({
           ...story,
@@ -51,7 +66,6 @@ export default class HomePage {
     const storyList = document.getElementById('story-list');
     storyList.innerHTML = `${html}`;
 
-    // 🔥 Inisialisasi Masonry
     const grid = storyList.closest('.masonry-grid');
     if (grid) {
       const msnry = new Masonry(grid, {
@@ -59,10 +73,16 @@ export default class HomePage {
         percentPosition: true,
       });
 
-      // 🖼️ Pastikan gambar sudah termuat sebelum layout
       imagesLoaded(grid, () => msnry.layout());
     }
-  } // ← ini kurung penutup yang tadinya hilang
+  }
+
+  async initialMap() {
+    this.#map = await Map.build('#map', {
+      zoom: 10,
+      locate: true,
+    });
+  }
 
   populateStoryListEmpty() {
     document.getElementById('story-list').innerHTML = emptyTemplate("stories");
@@ -70,6 +90,14 @@ export default class HomePage {
 
   populateStoryListError(message) {
     document.getElementById('story-list').innerHTML = errorTemplate(message, "stories");
+  }
+
+  showMapLoading() {
+    document.getElementById('map-loading-container').innerHTML = loaderAbsoluteTemplate();
+  }
+
+  hideMapLoading() {
+    document.getElementById('map-loading-container').innerHTML = '';
   }
 
   showLoading() {

@@ -73,12 +73,19 @@ export function storyItemTemplate({
   id,
   name,
   photoUrl,
+  createdAt,
+  description,
 }){
   return`
-    <div class="masonry-item col-4">
-      <a href="#/story/${id}">
+    <div class="masonry-item col-12 col-md-6 col-lg-4">
+      <a href="#/story/${id}" class="text-decoration-none">
         <div class="card">
           <img src="${photoUrl}" alt="Story from ${name}" class="card-img">
+          <div class="card-body">
+            <h2 class="card-title">${name}</h2>
+            <p class="card-date">${showFormattedDate(createdAt)}</p>
+            <p class="card-text">${description}</p>
+          </div>
         </div>
       </a>
     </div>
@@ -90,17 +97,22 @@ export function storyDetailTemplate({
   photoUrl,
   createdAt,
   description,
-  lan,
+  lat,
   lon,
 }){
   return`
       <div class="card">
-        <img src="${photoUrl}" alt="Story from ${name}" class="card-img">
+        <div class="card-header p-0">
+          <img src="${photoUrl}" alt="Story from ${name}" class="card-img">
+
+          <div id="map" class="map-container"></div>
+          <div id="map-loading-container"></div>
+        </div>
         <div class="card-body">
           <h2 class="card-title">${name}</h2>
           <p class="card-date">${showFormattedDate(createdAt)}</p>
           <p class="card-text">${description}</p>
-          <p class="card-text">Diambil dilokasi : [${lan}, ${lon}]</p>
+          <p class="card-text">Diambil dilokasi : [${lat}, ${lon}]</p>
         </div>
       </div>
   `;

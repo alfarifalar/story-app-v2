@@ -1,4 +1,4 @@
-import { map, tileLayer, Icon, icon, marker, popup } from 'leaflet';
+import { map, tileLayer, Icon, icon, marker, popup,latLng } from 'leaflet';
 import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -62,8 +62,8 @@ export default class Map {
       return new Map(selector, options);
     }
  
-    const jakartaCoordinate = [-6.2, 106.816666];
- 
+    const indonesiaCoor = [-2.548926, 118.0148634]; 
+
     // Using Geolocation API
     if ('locate' in options && options.locate) {
       try {
@@ -79,14 +79,14 @@ export default class Map {
  
         return new Map(selector, {
           ...options,
-          center: jakartaCoordinate,
+          center: indonesiaCoor,
         });
       }
     }
  
     return new Map(selector, {
       ...options,
-      center: jakartaCoordinate,
+      center: indonesiaCoor,
     });
   }
  

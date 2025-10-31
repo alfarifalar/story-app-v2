@@ -7,11 +7,22 @@ export default class StoriesDetailPresenter {
     this.#model = model;
   }
 
+  async showStoryMap() {
+    this.#view.showMapLoading();
+    try {
+      await this.#view.initialMap();
+      
+    } catch (error) {
+      console.error('showStoriesListMap: error:', error);
+    } finally {
+      this.#view.hideMapLoading();
+    }
+  }
+
   async initialStory(id) {
     this.#view.showLoading();
 
     try {
-      // panggil API dengan id
       const response = await this.#model.getById(id);
       console.log('StoryDetail Response:', response);
 
@@ -23,12 +34,10 @@ export default class StoriesDetailPresenter {
         return;
       }
 
-      // sukses
       this.#view.populateStory(message, story);
     } catch (error) {
       console.error('Request error:', error);
 
-      // ambil pesan error paling detail yang mungkin
       const message =
         error.response?.data?.message ||
         error.response?.request?.responseText ||

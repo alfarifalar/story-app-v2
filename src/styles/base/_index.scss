@@ -131,18 +131,13 @@ i.loader-button {
 
 /* New Locations */
 .new-form__location__map__container,
-.new-form__location__map {
+.new-form__location__map,
+.home-page__map,
+.map-container {
   height: 400px;
   position: relative;
 }
 
 .new-form__location__map__container {
   background-color: darkgray;
-}
-
-.new-form__location__lat-lng {
-  margin-block: 16px 8px;
-
-  display: flex;
-  gap: 10px;
 }
