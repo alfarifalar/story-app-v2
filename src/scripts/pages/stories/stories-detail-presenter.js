@@ -24,27 +24,18 @@ export default class StoriesDetailPresenter {
 
     try {
       const response = await this.#model.getById(id);
-      console.log('StoryDetail Response:', response);
-
-      const { error, message, story } = response.data;
-
-      if (error) {
-        console.error('Server error:', message);
-        this.#view.populateStoryError(message);
+            
+      if (!response.ok) {
+        console.error('StoryDetail-response:', response);
+        this.#view.populateStoryError(response.message);
         return;
       }
 
-      this.#view.populateStory(message, story);
+      console.log('Story Detail:', response.data);
+      this.#view.populateStory(response.message, response.story);
     } catch (error) {
-      console.error('Request error:', error);
-
-      const message =
-        error.response?.data?.message ||
-        error.response?.request?.responseText ||
-        error.message ||
-        'Terjadi kesalahan saat memuat cerita.';
-
-      this.#view.populateStoryError(message);
+      console.error('StoryDetail-error:', error);
+      this.#view.populateStoryError(error.message);
     } finally {
       this.#view.hideLoading();
     }

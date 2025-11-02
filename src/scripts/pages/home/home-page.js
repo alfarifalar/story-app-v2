@@ -79,7 +79,7 @@ export default class HomePage {
 
   async initialMap() {
     this.#map = await Map.build('#map', {
-      zoom: 10,
+      zoom: 5,
       locate: true,
     });
   }

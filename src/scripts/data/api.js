@@ -1,54 +1,108 @@
-import CONFIG from '../config';
-import axios from 'axios';
+import { BASE_URL } from '../config';
 import { getUserToken } from '../utils/auth';
 
 const ENDPOINTS = {
   // auth
-  REGISTER: `${CONFIG.BASE_URL}/register`,
-  LOGIN: `${CONFIG.BASE_URL}/login`,
+  REGISTER: `${BASE_URL}/register`,
+  LOGIN: `${BASE_URL}/login`,
 
   // add story
-  ADD_NEW_STORY: `${CONFIG.BASE_URL}/stories`,
+  ADD_NEW_STORY: `${BASE_URL}/stories`,
 
   // get all story
-  GET_ALL_STORY: `${CONFIG.BASE_URL}/stories`,
+  GET_ALL_STORY: `${BASE_URL}/stories`,
 
   // get detail story
-  GET_DETAIL_STORY: (id) => `${CONFIG.BASE_URL}/stories/${id}`,
+  GET_DETAIL_STORY: (id) => `${BASE_URL}/stories/${id}`,
 };
 
 export async function register({ name, email, password }) {
-  return await axios.post(ENDPOINTS.REGISTER, { name, email, password });
+  const data = JSON.stringify({ name, email, password });
+  const fetchResponse = await fetch(ENDPOINTS.REGISTER, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: data,
+  });
+  const json = await fetchResponse.json();
+
+  return{
+    ...json,
+    status: fetchResponse.ok,
+  };
 }
  
 export async function login({ email, password }) {
-  return await axios.post(ENDPOINTS.LOGIN, { email, password });
+  const data = JSON.stringify({ email, password });
+
+  const fetchResponse = await fetch(ENDPOINTS.LOGIN, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: data,
+  });
+  const json = await fetchResponse.json();
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
 }
 
 export  async function getAll(){
-  return await axios.get(ENDPOINTS.GET_ALL_STORY,{
-    headers:{
-      Authorization: `Bearer ${getUserToken(CONFIG.USER_TOKEN_KEY)}`,
+  const userToken = getUserToken();
+
+  const fetchResponse = await fetch(ENDPOINTS.GET_ALL_STORY, {
+    headers: {
+      Authorization: `Bearer ${userToken}`,
     },
   });
+  const json = await fetchResponse.json();
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
 }
 
 export  async function getById(id){
-  return await axios.get(ENDPOINTS.GET_DETAIL_STORY(id),{
+  const userToken = getUserToken();
+
+  const fetchResponse = await fetch(ENDPOINTS.GET_DETAIL_STORY(id), {
     headers: {
-      Authorization: `Bearer ${getUserToken(CONFIG.USER_TOKEN_KEY)}`,
+      Authorization: `Bearer ${userToken}`,
     },
   });
+  const json = await fetchResponse.json();
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
 }
-  
 
 export  async function addStory({description, photo, lat, lon}){
-  const data = {description, photo, lat, lon};
-  return await axios.post(ENDPOINTS.ADD_NEW_STORY, data, {
+  const userToken = getUserToken();
+
+  const formData = new FormData();
+  formData.append('photo', photo);
+  formData.append('description', description);
+  if (lat) formData.append('lat', lat);
+  if (lon) formData.append('lon', lon);
+  
+  const fetchResponse = await fetch(ENDPOINTS.ADD_NEW_STORY, {
+    method: 'POST',
     headers: {
-      "Content-Type": 'multipart/form-data',
-      Authorization: `Bearer ${getUserToken(CONFIG.USER_TOKEN_KEY)}`,
+      Authorization: `Bearer ${userToken}`,
     },
+    body: formData,
   });
+  const json = await fetchResponse.json();
+
+  return {
+    ...json,
+    ok: fetchResponse.ok,
+  };
 }
+
   

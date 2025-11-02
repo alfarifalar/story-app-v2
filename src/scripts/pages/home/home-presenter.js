@@ -1,3 +1,5 @@
+import { storyMapper } from "../../data/api-mapper";
+
 export default class HomePresenter {
   #view;
   #model;
@@ -24,29 +26,20 @@ export default class HomePresenter {
     try {
       await this.showStoriesListMap();
       const response = await this.#model.getAll();
-      console.log('initialStories: response:', response);
-
-      const { error, message, listStory } = response.data;
-
-      if (error) {
-        console.error('initialStories: server error:', message);
-        this.#view.populateStoryListError(message);
+      
+      if (!response.ok) {
+        console.error('Stories-response:', response);
+        this.#view.populateStoryListError(response.message);
         return;
       }
 
-      if (!listStory || listStory.length === 0) {
-        this.#view.populateStoryListEmpty();
-        return;
-      }
+      const stories = await Promise.all(response.listStory.map(storyMapper));
+      console.log('Stories List:', stories);
 
-      this.#view.populateStoryList(message, listStory);
+      this.#view.populateStoryList(response.message, stories);
     } catch (error) {
-      console.error('initialStories: error:', error);
-      const message =
-        error.response?.data?.message ||
-        error.message ||
-        'Terjadi kesalahan saat memuat cerita.';
-      this.#view.populateStoryListError(message);
+      console.error('Stories-error:', error);
+      this.#view.populateStoryListError(error.message);
     } finally {
       this.#view.hideLoading();
     }

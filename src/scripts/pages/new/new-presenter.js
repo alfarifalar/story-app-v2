@@ -29,14 +29,37 @@ export default class NewPresenter {
       };
       const response = await this.#model.addStory(data);
 
-      const { error, message} = response.data;
+      if (!response.ok) {
+        console.error('postNewStory-response:', response);
+        this.#view.storeFailed(response.message);
+        return;
+      }
 
-      this.#view.storeSuccessfully(message);
+      console.log('New Story:', response.story);
+      // No need to wait response
+      // this.#notifyToAllUser(response.story.id);
+
+      this.#view.storeSuccessfully(response.message, response.data);
     } catch (error) {
-      console.error('postNewReport: error:', error);
+      console.error('postNewReport-error:', error);
       this.#view.storeFailed(error.message);
     } finally {
       this.#view.hideSubmitLoadingButton();
     }
   }
+  // async #notifyToAllUser(storyId) {
+  //   try {
+  //     const response = await this.#model.sendStoryToAllUserViaNotification(storyId);
+
+  //     if (!response.ok) {
+  //       console.error('#notifyToAllUser: response:', response);
+  //       return false;
+  //     }
+
+  //     return true;
+  //   } catch (error) {
+  //     console.error('#notifyToAllUser: error:', error);
+  //     return false;
+  //   }
+  // }
 }

@@ -11,25 +11,21 @@ export default class LoginPresenter {
 
   async login({ email, password }) {
     this.#view.showSubmitLoadingButton();
-
     try {
       const response = await this.#model.login({ email, password });
-      console.log('Login: response:', response);
-
-      const { error, message, loginResult } = response.data;
-
-      if (error) {
-        this.#view.loginFailed(message);
+      if (!response.ok) {
+        console.error('Login-response:',response);
+        this.#view.loginFailed(response.message);
         return;
       }
 
-      this.#authModel.putUserToken(loginResult.token);
+      this.#authModel.putUserToken(response.loginResult.token);
 
-      this.#view.loginSuccessfully(message, loginResult);
+      this.#view.loginSuccessfully(response.message, response.data);
 
     } catch (error) {
-      console.error('login: error:', error);
-      this.#view.loginFailed(error.message || 'Terjadi kesalahan saat login');
+      console.error('Login-error:', error);
+      this.#view.loginFailed(error.message || 'Trouble logging in');
     } finally {
       this.#view.hideSubmitLoadingButton();
     }
