@@ -1,6 +1,7 @@
 import RegisterPage from '../pages/auth/register/register-page';
 import LoginPage from '../pages/auth/login/login-page';
 import HomePage from '../pages/home/home-page';
+import BookmarkPage from '../pages/bookmark/bookmark-page';
 import NewPage from '../pages/new/new-page';
 import StoriesDetailPage from '../pages/stories/stories-detail-page';
 import DevProfilePage from '../pages/profile/dev-profile-page';
@@ -15,5 +16,6 @@ export const routes = {
   '/new': () => checkAuthenticatedRoute(new NewPage()),
   '/story/:id': () => checkAuthenticatedRoute(new StoriesDetailPage()),
   '/developer': () => checkAuthenticatedRoute(new DevProfilePage()),
+  '/bookmark': () => checkAuthenticatedRoute(new BookmarkPage()),
 };
 

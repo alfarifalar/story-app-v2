@@ -78,11 +78,11 @@ export default class NewPage {
                     <div class="d-block d-md-flex row g-3">
                       <div class="col-12 col-md-6 mb-2">
                         <label class="form-label" for="latitude">Latitude</label>
-                        <input type="number" class="form-control" name="latitude" value="-6.175389" disabled>
+                        <input type="number" class="form-control" name="latitude" value="-6.175389" id="latitude" disabled>
                       </div>
                       <div class="col-12 col-md-6 mb-2">
                         <label class="form-label" for="longtitude">Longtitude</label>
-                        <input type="number" class="form-control" name="longitude" value="106.827139" disabled>
+                        <input type="number" class="form-control" name="longitude" value="106.827139" id="longtitude" disabled>
                       </div>
                     </div>
                   </div>

@@ -28,17 +28,22 @@ export function unauthenticatedNavigationListTemplate(){
 export function authenticatedNavigationListTemplate(){
   return`
     <li class="nav-item">
-      <a class="nav-link d-lg-flex align-items-center gap-2 p-0 px-md-2 py-md-1 active text-white text-center " aria-current="page" href="#/">
+      <a class="nav-link gap-2 p-0 px-md-2 py-md-1 active text-white text-center " aria-current="page" href="#/">
         Home
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link d-lg-flex align-items-center gap-2 p-0 px-md-2 py-md-1 text-white text-center" href="#/new">
+      <a class="nav-link gap-2 p-0 px-md-2 py-md-1 text-white text-center " href="#/bookmark">
+        Bookmarks
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link gap-2 p-0 px-md-2 py-md-1 text-white text-center" href="#/new">
         Add Story
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link d-lg-flex align-items-center gap-2 p-0 px-md-2 py-md-1 text-white text-center"  href="#/developer">
+      <a class="nav-link gap-2 p-0 px-md-2 py-md-1 text-white text-center"  href="#/developer">
         Dev Profile
       </a>
     </li>
@@ -113,7 +118,6 @@ export function storyDetailTemplate({
           <h2 class="card-title">${name}</h2>
           <p class="card-date">${showFormattedDate(createdAt)} | [${lat}, ${lon}]</p>
           <p class="card-text">${description}</p>
-          <div id="save-actions-container"></div>
         </div>
       </div>
   `;
@@ -130,6 +134,22 @@ export function unsubscribeButtonTemplate(){
   return `
     <button id="unsubscribe-button" class="btn btn-transparent text-white">
       <span><i class="fa-solid fa-bell-slash"></i></span> Unsubscribe
+    </button>
+  `;
+}
+
+export function saveStoryButtonTemplate() {
+  return `
+    <button id="story-detail-save" class="btn btn-cyan">
+      <i class="fa-regular fa-bookmark"></i> Save Story 
+    </button>
+  `;
+}
+
+export function removeStoryButtonTemplate() {
+  return `
+    <button id="story-detail-remove" class="btn btn-cyan">
+      <i class="fa-solid fa-bookmark"></i> Remove Story 
     </button>
   `;
 }
