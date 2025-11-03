@@ -1,2 +1,1 @@
-# balak-fishing-spot
-
+# Sutori App
