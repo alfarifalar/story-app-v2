@@ -1,8 +1,10 @@
 export default class StoriesDetailPresenter {
+  #storyId;
   #view;
   #model;
 
-  constructor({ view, model }) {
+  constructor( storyId, {view, model }) {
+    this.#storyId = storyId;
     this.#view = view;
     this.#model = model;
   }
@@ -19,11 +21,11 @@ export default class StoriesDetailPresenter {
     }
   }
 
-  async initialStory(id) {
+  async initialStory() {
     this.#view.showLoading();
 
     try {
-      const response = await this.#model.getById(id);
+      const response = await this.#model.getById(this.#storyId);
             
       if (!response.ok) {
         console.error('StoryDetail-response:', response);
@@ -31,7 +33,6 @@ export default class StoriesDetailPresenter {
         return;
       }
 
-      console.log('Story Detail:', response.data);
       this.#view.populateStory(response.message, response.story);
     } catch (error) {
       console.error('StoryDetail-error:', error);

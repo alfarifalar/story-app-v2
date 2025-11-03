@@ -3,9 +3,12 @@ import { getActiveRoute } from '../routes/url-parser';
 import { getUserToken, getLogout } from '../utils/auth';
 import { 
   authenticatedNavigationListTemplate,
-  unauthenticatedNavigationListTemplate
+  unauthenticatedNavigationListTemplate,
+  subscribeButtonTemplate,
+  unsubscribeButtonTemplate
 } from '../templates';
-import { setupSkipToContent, transitionHelper} from '../utils';
+import { subscribe, unsubscribe, isCurrentPushSubscriptionAvailable } from '../utils/notification-helper';
+import {  isServiceWorkerAvailable, setupSkipToContent, transitionHelper} from '../utils';
 
 class App {
   #content;
@@ -54,6 +57,26 @@ class App {
     });
   }
 
+  async #setupPushNotification() {
+    const pushNotificationTools = document.getElementById('push-notification-tools');
+    const isSubscribed = await isCurrentPushSubscriptionAvailable();
+    if (isSubscribed) {
+      pushNotificationTools.innerHTML = unsubscribeButtonTemplate();
+      document.getElementById('unsubscribe-button').addEventListener('click', () => {
+        unsubscribe().finally(() => {
+          this.#setupPushNotification();
+        });
+      });
+      return;
+    }
+    pushNotificationTools.innerHTML = subscribeButtonTemplate();
+    document.getElementById('subscribe-button').addEventListener('click', () => {
+      subscribe().finally(() => {
+        this.#setupPushNotification();
+      });
+    });
+  }
+
   async renderPage() {
     const url = getActiveRoute();
     const route = routes[url];
@@ -71,7 +94,9 @@ class App {
       scrollTo({ top: 0, behavior: 'instant' });
       this.#setupNavigationList();
       window.addEventListener('hashchange', () => this.#setActiveLink());
-
+      if (isServiceWorkerAvailable()) {
+        this.#setupPushNotification();
+      }
     });
 
   }

@@ -3,6 +3,7 @@ import {
   errorTemplate,
   storyDetailTemplate,
 } from '../../templates';
+import { parseActivePathname } from '../../routes/url-parser';
 import Map from '../../utils/map';
 import StoriesDetailPresenter from './stories-detail-presenter';
 import * as StoriesAPI from '../../data/api';
@@ -22,32 +23,23 @@ export default class StoriesDetailPage {
   }
 
   async afterRender() {
-    this.#presenter = new StoriesDetailPresenter({
+    this.#presenter = new StoriesDetailPresenter(parseActivePathname().id,{
       view: this,
       model: StoriesAPI,
     });
 
-    const url = window.location.hash;
-    const id = url.split('/')[2]; 
-
-    if (!id) {
-      this.populateStoryError('ID cerita tidak ditemukan di URL.');
-      return;
-    }
-
-    await this.#presenter.initialStory(id);
-    
+    this.#presenter.initialStory();
   }
 
   async populateStory(message, story) {
     document.getElementById('story-detail-container').innerHTML = storyDetailTemplate({
         ...story,
-        lat: story.lat || '-', 
-        lon: story.lon || '-',
+        lat: story.lat || 'lat not available', 
+        lon: story.lon || 'lon not available',
       });
       
     await this.#presenter.showStoryMap();
-    if (this.#map) {
+    if (this.#map && story.lat && story.lon) {
       const storyCoordinate = [story.lat, story.lon];
       const markerOptions = { alt: story.name };
       const popupOptions = { content: story.name };
@@ -76,6 +68,7 @@ export default class StoriesDetailPage {
   hideMapLoading() {
     document.getElementById('map-loading-container').innerHTML = '';
   }
+
 
   showLoading() {
     document.getElementById('story-detail-loading').innerHTML =

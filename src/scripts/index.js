@@ -4,6 +4,7 @@ import * as bootstrap from "bootstrap";
 import 'leaflet/dist/leaflet.css';
 import App from './pages/app';
 import Camera from './utils/camera';
+import { registerServiceWorker } from './utils';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const app = new App({
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     navigationDrawer: document.querySelector('#navigation-drawer'),
   });
   await app.renderPage();
+  await registerServiceWorker();
 
   window.addEventListener('hashchange', async () => {
     await app.renderPage();

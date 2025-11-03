@@ -48,6 +48,7 @@ export function authenticatedNavigationListTemplate(){
         Logout
       </a>
     </li>
+    <li id="push-notification-tools" class="nav-item text-center"></li>
   `;
 }
 
@@ -103,18 +104,32 @@ export function storyDetailTemplate({
   return`
       <div class="card">
         <div class="card-header p-0">
-          <img src="${photoUrl}" alt="Story from ${name}" class="card-img">
-
           <div id="map" class="map-container"></div>
           <div id="map-loading-container"></div>
+          <img src="${photoUrl}" alt="Story from ${name}" class="card-img">
+
         </div>
         <div class="card-body">
           <h2 class="card-title">${name}</h2>
-          <p class="card-date">${showFormattedDate(createdAt)}</p>
+          <p class="card-date">${showFormattedDate(createdAt)} | [${lat}, ${lon}]</p>
           <p class="card-text">${description}</p>
-          <p class="card-text">Diambil dilokasi : [${lat}, ${lon}]</p>
+          <div id="save-actions-container"></div>
         </div>
       </div>
   `;
 }
 
+export function subscribeButtonTemplate(){
+  return `
+    <button id="subscribe-button" class="btn btn-transparent text-white">
+      <span><i class="fa-solid fa-bell"></i></span> Subscribe
+    </button>
+  `;
+}
+export function unsubscribeButtonTemplate(){
+  return `
+    <button id="unsubscribe-button" class="btn btn-transparent text-white">
+      <span><i class="fa-solid fa-bell-slash"></i></span> Unsubscribe
+    </button>
+  `;
+}
