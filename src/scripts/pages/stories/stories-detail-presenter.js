@@ -66,7 +66,7 @@ export default class StoriesDetailPresenter {
   }
  
   async showSaveButton() {
-    if (this.#isStorySaved()) {
+    if (await this.#isStorySaved()) {
       this.#view.renderRemoveButton();
       return;
     }
