@@ -14,7 +14,7 @@ export default class DevProfilePresenter {
           'Passionate about building elegant web interfaces with modern technology.',
         avatar: 'https://avatars.githubusercontent.com/u/146556514?v=4',
         socials: {
-          github: 'https://github.com/algeric90',
+          github: 'https://github.com/alfarifalar',
           linkedin:
             'https://id.linkedin.com/in/alfa-rifa-luky-achmad-rayendra-5a2077289',
         },
